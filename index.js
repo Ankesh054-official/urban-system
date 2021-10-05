@@ -10,19 +10,44 @@ function show(element) {
   return (element.style = `display: flex;`);
 }
 
+function check(){
+  if(localStorage.getItem("selectedSlots")){
+    return true;
+  }else{
+    let data = [{},{}];
+    localStorage.setItem("selectedSlots",JSON.stringify(data));
+  }
+
+}
+
+function storeSelected(data){
+  if(localStorage.getItem("selectedSlots")){
+  }else{
+    let selecteddata = [{},{}];
+    localStorage.setItem("selectedSlots",JSON.stringify(selecteddata));
+  }
+  // let 
+  // console.log(data);
+}
+
 function calender() {
-    let monthsOf31 = {January, March, May, July, August, October, December}
-    let year = CurrentDate.gety
-    date = CurrentDate.getDate();
-    for(i = 0; i < 31; i++){
-        date += 1;
-        console.log(date);
-    }
-    let htm = ``;
-    htm += `
-    <button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);">1 OCt</button>    
-    `;
-    return (document.getElementById("dates").innerHTML = htm);
+  let htm = ``;
+  let months = [31, 0,31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let monthsName = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
+  let year = CurrentDate.getFullYear();
+  // program to check leap year
+  if ((0 == year % 4) && (0 != year % 100) || (0 == year % 400)) {
+      months[1] = 29;
+  } else {
+      months[1] = 28;
+  }
+  date = CurrentDate.getDate();
+  CurrentMonth = CurrentDate.getMonth();
+  for(i = date; i <= months[CurrentMonth]; i++){
+  htm += `<button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);" id="${date}/${monthsName[CurrentMonth]}/${year}" onclick="${localStorage.setItem("selectedDate",this.id)}">${date} ${monthsName[CurrentMonth]}</button>`;
+    date += 1;
+  }
+  return (document.getElementById("dates").innerHTML = htm);
 }
 
 function onInit() {
@@ -55,10 +80,21 @@ function onInit() {
   document.getElementById("co").addEventListener("click", corp);
   document.getElementById("ma").addEventListener("click", mal);
 }
-onInit()
+// onInit()
 
+function removeCaches(){
+  localStorage.removeItem("mall");
+  localStorage.removeItem("corporate");
+  localStorage.removeItem("selectedSlots");
+}
 
 function corp() {
+  if(localStorage.getItem("mall")){
+    localStorage.setItem("mall",false);
+  }else{
+    localStorage.setItem("mall",false);
+  }
+  localStorage.setItem("corporate",true);
   calender()
   let corporate = data[0];
   let htm = ``;
@@ -82,6 +118,12 @@ function corp() {
 }
 
 function mal() {
+  if(localStorage.getItem("corporate")){
+    localStorage.setItem("corporate",false);
+  }else{
+    localStorage.setItem("corporate",false);
+  }
+  localStorage.setItem("mall",true);
   calender()
   let mall = data[1];
   let htm = ``;

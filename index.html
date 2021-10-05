@@ -8,21 +8,21 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body onload="onInit()">
+<body onload="onInit()" onunload="removeCaches()">
     <div class="container">
-        <button type="button" class="btn btn-dark mx-5 my-5" id="co">CORPORATE</button>
-        <button type="button" class="btn btn-dark mx-5 my-5" id="ma">MALL</button>
+        <button type="button" class="btn btn-dark mx-5 my-5" id="co" >CORPORATE</button>
+        <button type="button" class="btn btn-dark mx-5 my-5" id="ma" >MALL</button>
         <hr>
         <div class="container-fluid" id="calender">
-            <button type="button" class="btn btn-light prev-icon mx-auto" id="previous" style="border: 1px solid rgb(179, 179, 179);">
+            <button type="button" class="btn btn-light prev-icon mx-auto" id="previous" onclick="document.getElementById('dates').scrollTo(200,300)" style="border: 1px solid rgb(179, 179, 179);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                   </svg>
             </button>
-            <div class="scrolling-wrapper container-fluid" id="dates">
+            <div class="scrolling-wrapper container-fluid" id="dates" style="scroll-behavior: smooth;">
 
             </div>
-            <button type="button" class="btn btn-light next-icon mx-auto" id="next" style="border: 1px solid rgb(179, 179, 179);">
+            <button type="button" class="btn btn-light next-icon mx-auto" id="next" onclick="document.getElementById('dates').scrollBy(200,300)" style="border: 1px solid rgb(179, 179, 179);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
                   </svg>
