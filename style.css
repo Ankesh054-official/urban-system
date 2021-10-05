@@ -1,0 +1,8 @@
+.scrolling-wrapper{
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.card {
+    flex: 0 0 auto;
+  }
