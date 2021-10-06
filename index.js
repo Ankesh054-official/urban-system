@@ -20,17 +20,15 @@ function check(){
 
 }
 
-
-
 function addSlot(data){
   // (2) [{…}, {…}]
-// 0:
-// Delhi:
-// 6 Oct 2021:
-// 13:0: 2
-// 14:0: 2
-// Kolkata:
-// 6 Oct 2021: {13:0: 2, 14:0: 2}
+  // 0:
+  // Delhi:
+  // 6 Oct 2021:
+  // 13:0: 2
+  // 14:0: 2
+  // Kolkata:
+  // 6 Oct 2021: {13:0: 2, 14:0: 2}
   let selecteddata = [{},{}];
   let corporateStatus = localStorage.getItem("corporate");
   let mallStatus = localStorage.getItem("mall");
@@ -38,27 +36,20 @@ function addSlot(data){
   let time = data.split("/")[-1];
   let CtData = {};
   CtData[locat] = {};
-  CtData[locat][localStorage.getItem("selectedDate")] = {}; 0
-  localStorage.getItem("selectedData")[locat][localStorage.getItem("selectedDate")].forEach(slot =>{
-    if((localStorage.getItem("selectedData")[locat][localStorage.getItem("selectedDate")][time])){
-      CtData[locat][localStorage.getItem("selectedDate")][time] = 1;
-    }else{
-      let count = localStorage.getItem("selectedData")[locat][localStorage.getItem("selectedDate")][time];
-      count+=1;
-      CtData[locat][localStorage.getItem("selectedDate")][time] = count;
-    }
-    console.log(slot)
-  });
+  CtData[locat][localStorage.getItem("selectedDate")] = {};
+  // look at this rubbish code
+  console.log(CtData);
   if(localStorage.getItem("selectedSlots")){
   }else{
     localStorage.setItem("selectedData",JSON.stringify(selecteddata));
   }
   if(corporateStatus){
-    selecteddata[0].push(CtData);
+    selecteddata[0] = CtData;
   }else{
-    selecteddata[1].push(CtData);
+    selecteddata[1] = CtData;
   }
   localStorage.setItem("selectedData", selecteddata);
+  console.log(JSON.parse(localStorage.getItem("selectedData"))[0]);
 }
 
 function setDate(data) {
@@ -129,6 +120,8 @@ function onInit() {
       }
     });
   }
+  date = date.replace(/\s/g, '/');
+  localStorage.setItem("selectedDate",date);
   document.getElementById("co").addEventListener("click", corp);
   document.getElementById("ma").addEventListener("click", mal);
 }
