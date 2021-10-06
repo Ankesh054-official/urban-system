@@ -30,6 +30,10 @@ function storeSelected(data){
   // console.log(data);
 }
 
+function setDate(data) {
+  localStorage.setItem("selectedDate",data); 
+}
+
 function calender() {
   let htm = ``;
   let months = [31, 0,31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -43,9 +47,12 @@ function calender() {
   }
   date = CurrentDate.getDate();
   CurrentMonth = CurrentDate.getMonth();
-  for(i = date; i <= months[CurrentMonth]; i++){
-  htm += `<button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);" id="${date}/${monthsName[CurrentMonth]}/${year}" onclick="${localStorage.setItem("selectedDate",this.id)}">${date} ${monthsName[CurrentMonth]}</button>`;
-    date += 1;
+  for(j = CurrentMonth; j <= 12; j++){
+    for(i = date; i <= months[j]; i++){
+    htm += `<button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);" id="${date}/${monthsName[j]}/${year}" onclick="setDate(this.id)">${date} ${monthsName[j]}</button>`;
+      date += 1;
+    }
+    date = 1;
   }
   return (document.getElementById("dates").innerHTML = htm);
 }
@@ -86,6 +93,7 @@ function removeCaches(){
   localStorage.removeItem("mall");
   localStorage.removeItem("corporate");
   localStorage.removeItem("selectedSlots");
+  localStorage.removeItem("selectedDate");
 }
 
 function corp() {
@@ -98,6 +106,20 @@ function corp() {
   calender()
   let corporate = data[0];
   let htm = ``;
+  let slots = ``;
+  let hour = CurrentDate.getHours();
+  let minutes = CurrentDate.getMinutes()+5;
+  for(;;){
+    if(hour >= 23){
+      slots += `<a href="#" class="btn btn-primary">${hour}:${minutes}</a>`;
+      if(minutes <= 45){
+        minutes += 15;
+      }
+    }else{
+      break
+    }
+  }
+  console.log(CurrentDate.getHours()+" "+(CurrentDate.getMinutes()+5));
   Object.keys(corporate).forEach((Colocation) => {
     Object.keys(corporate[Colocation]).forEach((dt) => {
       Object.keys(corporate[Colocation][dt]).forEach((tme) => {
@@ -106,9 +128,21 @@ function corp() {
                                 <div class="card mb-3 mx-3" style="width: 100%;">
                                     <div class="card-body">
                                         <h5 class="card-title">${Colocation}</h5>
-                                        <p class="card-text">${dt}</p>
-                                        <a href="#" class="btn btn-primary">${tme}</a>
-                                    </div>  
+                                        <div class="accordion" id="accordionExample">
+                                          <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingOne">
+                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                Book Slots
+                                              </button>
+                                            </h2>
+                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                              <div class="accordion-body">
+                                                ${slots}
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>  
+                                    </div>
                                 </div>`;
       });
     });
