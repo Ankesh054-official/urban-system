@@ -2,6 +2,11 @@
     display: flex;
     overflow-x: auto;
     scrollbar-width: none;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.scrolling-wrapper::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 }
 .card {
     flex: 0 0 auto;
