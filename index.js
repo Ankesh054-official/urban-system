@@ -17,7 +17,6 @@ function check(){
     let data = [{},{}];
     localStorage.setItem("selectedData",JSON.stringify(data));
   }
-
 }
 
 function addSlot(data){
@@ -29,27 +28,57 @@ function addSlot(data){
   // 14:0: 2
   // Kolkata:
   // 6 Oct 2021: {13:0: 2, 14:0: 2}
+  check()
   let selecteddata = [{},{}];
   let corporateStatus = localStorage.getItem("corporate");
   let mallStatus = localStorage.getItem("mall");
   let locat = data.split("/")[0];
-  let time = data.split("/")[-1];
-  let CtData = {};
-  CtData[locat] = {};
-  CtData[locat][localStorage.getItem("selectedDate")] = {};
-  // look at this rubbish code
-  console.log(CtData);
-  if(localStorage.getItem("selectedSlots")){
-  }else{
-    localStorage.setItem("selectedData",JSON.stringify(selecteddata));
-  }
+  let time = data.split("/")[1];
+  let locati = "";
   if(corporateStatus){
-    selecteddata[0] = CtData;
+    locati = JSON.parse(localStorage.getItem("selectedData"))[0];
   }else{
-    selecteddata[1] = CtData;
+    locati = JSON.parse(localStorage.getItem("selectedData"))[1];
   }
-  localStorage.setItem("selectedData", selecteddata);
-  console.log(JSON.parse(localStorage.getItem("selectedData"))[0]);
+  locati.forEach(loc => {
+    if(locat == loc){
+      Object.keys(loc).forEach(date =>{
+        if(date == localStorage.getItem("selectedDate")){
+          Object.keys(date).forEach(tim => {
+            if(time == tim){
+              x = locati[loc][date][tim];
+              x += 1;
+            }else{
+              locati[loc][date][time] = 1;
+            }
+          });
+        }else{
+          locati[loc][localStorage.getItem("selectedDate")] = {};
+          locati[loc][localStorage.getItem("selectedDate")][time] = 1;
+        }
+      });
+    }else{
+      locati[locat] = {};
+      locati[locat][localStorage.getItem("selectedDate")] = {};
+      locati[locat][localStorage.getItem("selectedDate")][time] = 1;
+    }
+  });
+  locati[locat] = {};
+      locati[locat][localStorage.getItem("selectedDate")] = {};
+      locati[locat][localStorage.getItem("selectedDate")][time] = 1;
+  localStorage.setItem("selectedData",locati);
+
+  // if(localStorage.getItem("selectedSlots")){
+  // }else{
+  //   localStorage.setItem("selectedData",JSON.stringify(selecteddata));
+  // }
+  // if(corporateStatus){
+  //   selecteddata[0] = CtData;
+  // }else{
+  //   selecteddata[1] = CtData;
+  // }
+  // localStorage.setItem("selectedData", selecteddata);
+  // console.log(JSON.parse(localStorage.getItem("selectedData"))[0]);
 }
 
 function setDate(data) {
@@ -148,19 +177,6 @@ function corp() {
   calender()
   let corporate = data[0];
   let htm = ``;
-  // let slots = ``;
-  // let hour = CurrentDate.getHours();
-  // let minutes = CurrentDate.getMinutes()+5;
-  // for(i = hour; i <=23; i++){
-  //   if(hour <= 23){
-  //     slots += `<a href="#" class="btn btn-primary mx-3 my-2">${hour}:${minutes}</a>`;
-  //     if(minutes <= 45){
-  //       minutes += 15;
-  //     }
-  //   }else{
-  //     break
-  //   }
-  // }
   console.log(CurrentDate.getHours()+" "+(CurrentDate.getMinutes()+5));
   Object.keys(corporate).forEach((Colocation) => {
     Object.keys(corporate[Colocation]).forEach((dt) => {
