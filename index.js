@@ -91,36 +91,30 @@ function addSlot(data){
     let locatio = false;
     Object.keys(selecteddata[0]).forEach(lo =>{
       if(lo == locat){
-        locatio = true;
-      }else{
-        locatio = false;
+        return locatio = true;
       }
     });
     if(locatio){
-      console.log(locatio)
       let dateio = false;
       Object.keys(selecteddata[0][locat]).forEach(lo =>{
         if(lo == localStorage.getItem("selectedDate")){
-          dateio =  true;
-        }else{
-          datio = false;
+          return dateio =  true;
         }
       });
         if(dateio){
           let timio = false;
           Object.keys(selecteddata[0][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
             if(lo == time){
-              timio = true;
-            }else{
-              timio = false;
+              return timio = true;
             }
           });
           if(timio){
-            console.log(selecteddata[0][locat][localStorage.getItem("selectedDate")][time]);
+            selecteddata[0][locat][localStorage.getItem("selectedDate")][time] += 1;
           }else{
             selecteddata[0][locat][localStorage.getItem("selectedDate")][time] = 1;
           }
         }else{
+          console.log(dateio);
           selecteddata[0][locat][localStorage.getItem("selectedDate")] = {};
           selecteddata[0][locat][localStorage.getItem("selectedDate")][time] = 1;
         }
