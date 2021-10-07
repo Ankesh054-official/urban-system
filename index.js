@@ -1,5 +1,5 @@
-let CurrentDate = new Date();
 let data = [[], []];
+let CurrentDate = new Date();
 hide(document.getElementById("calender"));
 
 function hide(element) {
@@ -37,7 +37,7 @@ function onInit() {
       }
     });
   }
-  let dat = [[],[]];
+  let dat = {};
   localStorage.setItem("selectedData",JSON.stringify(dat));
   date = date.replace(/\s/g, '/');
   localStorage.setItem("selectedDate",date);
@@ -68,28 +68,30 @@ function calender() {
   }
   date = CurrentDate.getDate();
   CurrentMonth = CurrentDate.getMonth();
-  for(j = CurrentMonth; j <= 12; j++){
-    for(i = date; i <= months[j]; i++){
-    htm += `<button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);" id="${date}/${monthsName[j]}/${year}" onclick="setDate(this.id)">${date} ${monthsName[j]}</button>`;
-      date += 1;
+    for(j = CurrentMonth; j <= 12; j++){
+      for(i = date; i <= months[j]; i++){
+      htm += `<button type="button" class="btn btn-light" style="border-right: 2px solid rgb(179, 179, 179);" id="${date}/${monthsName[j]}/${year}" onclick="setDate(this.id)">${date} ${monthsName[j]}</button>`;
+        date += 1;
+      }
+      date = 1;
     }
-    date = 1;
-  }
   return (document.getElementById("dates").innerHTML = htm);
 }
 
 function adding_To_JSON_Tree(selecteddata, locat, time, index){
   let locatio = false;
   let indx = 0;
+  let INDEX = 0;
   // selecteddata[0] Corporate data
   // selecteddata[1] Mall data 
-  for(indx = 0; indx < selecteddata[index].length; indx++){
-    lo = selecteddata[index][indx]["id"];
-    // Checking location exists or not
-    if(lo == locat){
-      indx = indx;
-      locatio = true;
-      break;
+  for(INDEX = 0; INDEX < selecteddata.length; INDEX++){
+    for(indx = 0; indx < selecteddata[index].length; indx++){
+      lo = selecteddata[index][indx]["id"];
+      // Checking location exists or not
+      if(lo == locat){
+        locatio = true;
+        break;
+      }
     }
   }
   if(locatio){
