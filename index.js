@@ -14,7 +14,7 @@ function onInit() {
   date =
     CurrentDate.getDate() +
     " " +
-    CurrentDate.toLocaleString("default", { month: "short" }) +
+    (CurrentDate.toLocaleString("default", { month: "short" })).toUpperCase() +
     " " +
     CurrentDate.getFullYear();
   let locat = ["Delhi", "Mumbai", "Kolkata"];
@@ -78,7 +78,44 @@ function calender() {
   return (document.getElementById("dates").innerHTML = htm);
 }
 
-
+function adding_To_JSON_Tree(selecteddata, locat, time, index){
+  let locatio = false;
+    Object.keys(selecteddata[index]).forEach(lo =>{
+      if(lo == locat){
+        return locatio = true;
+      }
+    });
+    if(locatio){
+      let dateio = false;
+      Object.keys(selecteddata[index][locat]).forEach(lo =>{
+        if(lo == localStorage.getItem("selectedDate")){
+          return dateio =  true;
+        }
+      });
+        if(dateio){
+          let timio = false;
+          Object.keys(selecteddata[index][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
+            if(lo == time){
+              return timio = true;
+            }
+          });
+          if(timio){
+            selecteddata[index][locat][localStorage.getItem("selectedDate")][time] += 1;
+          }else{
+            selecteddata[index][locat][localStorage.getItem("selectedDate")][time] = 1;
+          }
+        }else{
+          console.log(dateio);
+          selecteddata[index][locat][localStorage.getItem("selectedDate")] = {};
+          selecteddata[index][locat][localStorage.getItem("selectedDate")][time] = 1;
+        }
+    }else{
+      selecteddata[index][locat] = {};
+      selecteddata[index][locat][localStorage.getItem("selectedDate")] = {};
+      selecteddata[index][locat][localStorage.getItem("selectedDate")][time] = 1;
+    }
+  localStorage.setItem("selectedData",JSON.stringify(selecteddata));
+}
 
 function addSlot(data){
   // check()
@@ -88,82 +125,10 @@ function addSlot(data){
   let locat = data.split("/")[0];
   let time = data.split("/")[1];
   if(corporateStatus == "true"){
-    let locatio = false;
-    Object.keys(selecteddata[0]).forEach(lo =>{
-      if(lo == locat){
-        return locatio = true;
-      }
-    });
-    if(locatio){
-      let dateio = false;
-      Object.keys(selecteddata[0][locat]).forEach(lo =>{
-        if(lo == localStorage.getItem("selectedDate")){
-          return dateio =  true;
-        }
-      });
-        if(dateio){
-          let timio = false;
-          Object.keys(selecteddata[0][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
-            if(lo == time){
-              return timio = true;
-            }
-          });
-          if(timio){
-            selecteddata[0][locat][localStorage.getItem("selectedDate")][time] += 1;
-          }else{
-            selecteddata[0][locat][localStorage.getItem("selectedDate")][time] = 1;
-          }
-        }else{
-          console.log(dateio);
-          selecteddata[0][locat][localStorage.getItem("selectedDate")] = {};
-          selecteddata[0][locat][localStorage.getItem("selectedDate")][time] = 1;
-        }
-    }else{
-      selecteddata[0][locat] = {};
-      selecteddata[0][locat][localStorage.getItem("selectedDate")] = {};
-      selecteddata[0][locat][localStorage.getItem("selectedDate")][time] = 1;
-    }
+    adding_To_JSON_Tree(selecteddata, locat, time, 0);
   }else{
-    locatio = Object.keys(selecteddata[1]).forEach(lo =>{
-      if(lo == locat){
-        return true;
-      }else{
-        return false;
-      }
-    });
-    if(locatio){
-      dateio = Object.keys(selecteddata[1][locat]).forEach(lo =>{
-        if(lo == localStorage.getItem("selectedDate")){
-          return true;
-        }else{
-          return false;
-        }
-      });
-        if(dateio){
-          timio = Object.keys(selecteddata[1][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
-            if(lo == time){
-              return true;
-            }else{
-              return false;
-            }
-          });
-          if(timio){
-            selecteddata[1][locat][localStorage.getItem("selectedDate")][time] += 1;
-          }else{
-            selecteddata[1][locat][localStorage.getItem("selectedDate")][time] = 1;
-          }
-        }else{
-          selecteddata[1][locat][localStorage.getItem("selectedDate")] = {};
-          selecteddata[1][locat][localStorage.getItem("selectedDate")][time] = 1;
-        }
-    }else{
-      selecteddata[1][locat] = {};
-      selecteddata[1][locat][localStorage.getItem("selectedDate")] = {};
-      selecteddata[1][locat][localStorage.getItem("selectedDate")][time] = 1;
-    }
-    
+    adding_To_JSON_Tree(selecteddata, locat, time, 1);
   }
-  localStorage.setItem("selectedData",JSON.stringify(selecteddata));
 }
 
 function setDate(data) {
@@ -211,29 +176,29 @@ function corp() {
                                             </h2>
                                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                               <div class="accordion-body">
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id)">1:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id)">2:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id)">3:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id)">4:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id)">5:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id)">6:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id)">7:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id)">8:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id)">9:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id)">10:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id)">11:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id)">12:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id)">13:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id)">14:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id)">15:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id)">16:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id)">17:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id)">18:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id)">19:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id)">20:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id)">21:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id)">22:00</a>
-                                              <a href="#" class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id)">23:00</a>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id)">1:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id)">2:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id)">3:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id)">4:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id)">5:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id)">6:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id)">7:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id)">8:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id)">9:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id)">10:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id)">11:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id)">12:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id)">13:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id)">14:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id)">15:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id)">16:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id)">17:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id)">18:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id)">19:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id)">20:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id)">21:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id)">22:00</button>
+                                              <button class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id)">23:00</button>
                                               </div>
                                             </div>
                                           </div>
