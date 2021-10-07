@@ -41,8 +41,6 @@ function onInit() {
   localStorage.setItem("selectedData",JSON.stringify(dat));
   date = date.replace(/\s/g, '/');
   localStorage.setItem("selectedDate",date);
-  document.getElementById("co").addEventListener("click", corp);
-  document.getElementById("ma").addEventListener("click", mal);
 }
 
 // onInit()
@@ -52,7 +50,6 @@ function removeCaches(){
   localStorage.removeItem("corporate");
   localStorage.removeItem("selectedSlots");
   localStorage.removeItem("selectedDate");
-  // localStorage.removeItem("selectedData");
 }
 
 function calender() {
@@ -130,7 +127,7 @@ function adding_To_JSON_Tree(selecteddata, locat, time, index){
   localStorage.setItem("selectedData",JSON.stringify(selecteddata));
 }
 
-function addSlot(data){
+function addSlot(data, site){
   // console.log(data);
   // check()
   let selecteddata = JSON.parse(localStorage.getItem("selectedData"));
@@ -139,9 +136,9 @@ function addSlot(data){
   let locat = data.split("/")[0];
   let time = data.split("/")[1];
   if(corporateStatus == "true"){
-    adding_To_JSON_Tree(selecteddata, locat, time, 0);
+    adding_To_JSON_Tree(selecteddata, site, locat, time, 0);
   }else{
-    adding_To_JSON_Tree(selecteddata, locat, time, 1);
+    adding_To_JSON_Tree(selecteddata, site, locat, time, 1);
   }
 }
 
@@ -163,13 +160,16 @@ function setDate(data) {
 }
 
 
-function corp() {
+function corp(idc) {
   if(localStorage.getItem("mall")){
     localStorage.setItem("mall",false);
   }else{
     localStorage.setItem("mall",false);
   }
   localStorage.setItem("corporate",true);
+  let DA = JSON.parse(localStorage.getItem("selectedData"));
+  DA[idc] = {};
+  localStorage.setItem("selectedData",JSON.stringify(DA));
   calender()
   let corporate = data[0];
   let htm = ``;
@@ -198,29 +198,29 @@ function corp() {
                                             </h2>
                                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                               <div class="accordion-body">
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id)">1:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id)">2:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id)">3:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id)">4:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id)">5:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id)">6:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id)">7:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id)">8:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id)">9:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id)">10:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id)">11:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id)">12:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id)">13:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id)">14:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id)">15:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id)">16:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id)">17:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id)">18:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id)">19:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id)">20:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id)">21:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id)">22:00</button>
-                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id)">23:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id, ${idc})">1:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id, ${idc})">2:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id, ${idc})">3:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id, ${idc})">4:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id, ${idc})">5:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id, ${idc})">6:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id, ${idc})">7:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id, ${idc})">8:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id, ${idc})">9:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id, ${idc})">10:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id, ${idc})">11:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id, ${idc})">12:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id, ${idc})">13:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id, ${idc})">14:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id, ${idc})">15:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id, ${idc})">16:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id, ${idc})">17:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id, ${idc})">18:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id, ${idc})">19:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id, ${idc})">20:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id, ${idc})">21:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id, ${idc})">22:00</button>
+                                                <button class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id, ${idc})">23:00</button>
                                               </div>
                                             </div>
                                           </div>
@@ -234,13 +234,16 @@ function corp() {
   return (document.getElementById("result").innerHTML = htm);
 }
 
-function mal() {
+function mal(idc) {
   if(localStorage.getItem("corporate")){
     localStorage.setItem("corporate",false);
   }else{
     localStorage.setItem("corporate",false);
   }
   localStorage.setItem("mall",true);
+  let DA = JSON.parse(localStorage.getItem("selectedData"));
+  DA[idc] = {};
+  localStorage.setItem("selectedData",JSON.stringify(DA));
   calender()
   let mall = data[1];
   let htm = ``;
@@ -268,29 +271,29 @@ function mal() {
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id)">1:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id)">2:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id)">3:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id)">4:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id)">5:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id)">6:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id)">7:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id)">8:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id)">9:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id)">10:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id)">11:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id)">12:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id)">13:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id)">14:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id)">15:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id)">16:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id)">17:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id)">18:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id)">19:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id)">20:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id)">21:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id)">22:00</button>
-                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id)">23:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id, ${idc})">1:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id, ${idc})">2:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/3:00" onclick="addSlot(this.id, ${idc})">3:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/4:00" onclick="addSlot(this.id, ${idc})">4:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/5:00" onclick="addSlot(this.id, ${idc})">5:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/6:00" onclick="addSlot(this.id, ${idc})">6:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/7:00" onclick="addSlot(this.id, ${idc})">7:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/8:00" onclick="addSlot(this.id, ${idc})">8:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/9:00" onclick="addSlot(this.id, ${idc})">9:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/10:00" onclick="addSlot(this.id, ${idc})">10:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/11:00" onclick="addSlot(this.id, ${idc})">11:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/12:00" onclick="addSlot(this.id, ${idc})">12:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/13:00" onclick="addSlot(this.id, ${idc})">13:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/14:00" onclick="addSlot(this.id, ${idc})">14:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/15:00" onclick="addSlot(this.id, ${idc})">15:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/16:00" onclick="addSlot(this.id, ${idc})">16:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/17:00" onclick="addSlot(this.id, ${idc})">17:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/18:00" onclick="addSlot(this.id, ${idc})">18:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/19:00" onclick="addSlot(this.id, ${idc})">19:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/20:00" onclick="addSlot(this.id, ${idc})">20:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/21:00" onclick="addSlot(this.id, ${idc})">21:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/22:00" onclick="addSlot(this.id, ${idc})">22:00</button>
+                        <button class="btn btn-primary mx-3 my-2" id="${Colocation}/23:00" onclick="addSlot(this.id, ${idc})">23:00</button>
                       </div>
                     </div>
                   </div>
