@@ -88,27 +88,31 @@ function addSlot(data){
   let locat = data.split("/")[0];
   let time = data.split("/")[1];
   if(corporateStatus == "true"){
-    locatio = Object.keys(selecteddata[0]).forEach(lo =>{
+    let locatio = false;
+    Object.keys(selecteddata[0]).forEach(lo =>{
       if(lo == locat){
-        return true;
+        locatio = true;
       }else{
-        return false;
+        locatio = false;
       }
     });
     if(locatio){
-      dateio = Object.keys(selecteddata[0][locat]).forEach(lo =>{
+      console.log(locatio)
+      let dateio = false;
+      Object.keys(selecteddata[0][locat]).forEach(lo =>{
         if(lo == localStorage.getItem("selectedDate")){
-          return true;
+          dateio =  true;
         }else{
-          return false;
+          datio = false;
         }
       });
         if(dateio){
-          timio = Object.keys(selecteddata[0][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
+          let timio = false;
+          Object.keys(selecteddata[0][locat][localStorage.getItem("selectedDate")]).forEach(lo =>{
             if(lo == time){
-              return true;
+              timio = true;
             }else{
-              return false;
+              timio = false;
             }
           });
           if(timio){
