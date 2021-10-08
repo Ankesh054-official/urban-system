@@ -75,22 +75,23 @@ function calender() {
   return (document.getElementById("dates").innerHTML = htm);
 }
 
-function adding_To_JSON_Tree(selecteddata, locat, time, index){
+function adding_To_JSON_Tree(selecteddata, site, locat, time){
   let locatio = false;
   let indx = 0;
-  let INDEX = 0;
+  // let INDEX = 0;
   // selecteddata[0] Corporate data
-  // selecteddata[1] Mall data 
-  for(INDEX = 0; INDEX < selecteddata.length; INDEX++){
-    for(indx = 0; indx < selecteddata[index].length; indx++){
-      lo = selecteddata[index][indx]["id"];
+  // // selecteddata[1] Mall data 
+  // for(INDEX = 0; INDEX < selecteddata.length; INDEX++){
+
+    for(indx = 0; indx < selecteddata[site].length; indx++){
+      lo = selecteddata[site][indx]["id"];
       // Checking location exists or not
       if(lo == locat){
         locatio = true;
         break;
       }
     }
-  }
+  // }
   if(locatio){
     // let dateio = false;
     // Object.keys(selecteddata[index]["slots"]).forEach(lo =>{
@@ -118,11 +119,12 @@ function adding_To_JSON_Tree(selecteddata, locat, time, index){
       // }
   }else{
       // creating new object containing location id and slots 
-      selecteddata[index].push({});
-      selecteddata[index][(selecteddata[index].length)-1]["id"] = locat;
-      selecteddata[index][(selecteddata[index].length)-1]["slots"] = {};
-      selecteddata[index][(selecteddata[index].length)-1]["slots"] = {};
-      selecteddata[index][(selecteddata[index].length)-1]["slots"][time] = 1;
+      // for(int )
+      selecteddata[site][indx];
+      selecteddata[site][(selecteddata[index].length)-1]["id"] = locat;
+      selecteddata[site][(selecteddata[index].length)-1]["slots"] = {};
+      selecteddata[site][(selecteddata[index].length)-1]["slots"] = {};
+      selecteddata[site][(selecteddata[index].length)-1]["slots"][time] = 1;
     }
   localStorage.setItem("selectedData",JSON.stringify(selecteddata));
 }
@@ -135,11 +137,13 @@ function addSlot(data, site){
   let mallStatus = localStorage.getItem("mall");
   let locat = data.split("/")[0];
   let time = data.split("/")[1];
-  if(corporateStatus == "true"){
-    adding_To_JSON_Tree(selecteddata, site, locat, time, 0);
-  }else{
-    adding_To_JSON_Tree(selecteddata, site, locat, time, 1);
-  }
+    adding_To_JSON_Tree(selecteddata, site, locat, time);
+
+  // if(corporateStatus == "true"){
+  //   adding_To_JSON_Tree(selecteddata, site, locat, time, 0);
+  // }else{
+  //   adding_To_JSON_Tree(selecteddata, site, locat, time, 1);
+  // }
 }
 
 function setDate(data) {
