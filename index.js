@@ -160,14 +160,27 @@ function addSlot(data, site){
 //   document.getElementById(data).className += " btn-dark";
 // }
 
+function colorChange(id){
+  let dark = (document.getElementById(id).className).split(" ");
+  let classes = ``;
+  if(dark.includes("btn-dark")){
+    for (let i = 0; i < dark.length; i++) {
+      if(dark[i] != "btn-dark")
+      classes += ` ${dark[i]}`;
+    }
+    classes +=  ` btn-light`;
+  }else if(dark.includes("btn-light")){
+    for (let i = 0; i < dark.length; i++) {
+      if(dark[i] != "btn-light")
+      classes += ` ${dark[i]}`;
+    }
+    classes +=  ` btn-dark`;
+  }
+  document.getElementById(id).className = classes;
+}
+
 
 function corp(idc) {
-  // if(localStorage.getItem("mall")){
-  //   localStorage.setItem("mall",false);
-  // }else{
-  //   localStorage.setItem("mall",false);
-  // }
-  // localStorage.setItem("corporate",true);
   let DA = JSON.parse(localStorage.getItem("selectedData"));
   DA[idc] = [];
   localStorage.setItem("selectedData",JSON.stringify(DA));
@@ -187,17 +200,18 @@ function corp(idc) {
           loc = "Kolkata";
         }
         htm += `
+                                <p class="fs-1">Corporate</p>
                                 <div class="card mb-3 mx-3" style="width: 100%;">
                                     <div class="card-body">
                                         <h5 class="card-title">${loc}</h5>
                                         <div class="accordion" id="accordionExample">
                                           <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingOne">
-                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne${loc}" aria-expanded="true" aria-controls="collapseOne">
                                                 Book Slots
                                               </button>
                                             </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div id="collapseOne${loc}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                               <div class="accordion-body">
                                                 <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id, '${idc}')">1:00</button>
                                                 <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id, '${idc}')">2:00</button>
@@ -236,12 +250,6 @@ function corp(idc) {
 }
 
 function mal(idc) {
-  // if(localStorage.getItem("corporate")){
-  //   localStorage.setItem("corporate",false);
-  // }else{
-  //   localStorage.setItem("corporate",false);
-  // }
-  // localStorage.setItem("mall",true);
   let DA = JSON.parse(localStorage.getItem("selectedData"));
   DA[idc] = [];
   localStorage.setItem("selectedData",JSON.stringify(DA));
@@ -260,17 +268,18 @@ function mal(idc) {
           loc = "Kolkata";
         }
         htm += `
+        <p class="fs-1">Mall</p>
         <div class="card mb-3 mx-3" style="width: 100%;">
             <div class="card-body">
                 <h5 class="card-title">${loc}</h5>
                 <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne${loc}" aria-expanded="true" aria-controls="collapseOne">
                         Book Slots
                       </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne${loc}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
                         <button class="btn btn-primary mx-3 my-2" id="${Colocation}/1:00" onclick="addSlot(this.id, '${idc}')">1:00</button>
                         <button class="btn btn-primary mx-3 my-2" id="${Colocation}/2:00" onclick="addSlot(this.id, '${idc}')">2:00</button>
