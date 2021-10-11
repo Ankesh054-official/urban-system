@@ -312,7 +312,7 @@ function mal(idc) {
         </div>`;
       // });
     });
-  });ht = `<p class="fs-1">Corporate</p> ; `
+  });ht = `<p class="fs-1">Mall</p> ; `
   ht += htm;
   // show(document.getElementById("calender"));
   return (document.getElementById("result").innerHTML = ht);
