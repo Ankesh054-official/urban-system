@@ -200,7 +200,6 @@ function corp(idc) {
           loc = "Kolkata";
         }
         htm += `
-                                <p class="fs-1">Corporate</p>
                                 <div class="card mb-3 mx-3" style="width: 100%;">
                                     <div class="card-body">
                                         <h5 class="card-title">${loc}</h5>
@@ -245,8 +244,10 @@ function corp(idc) {
       // });
     });
   });
+  ht = `<p class="fs-1">Corporate</p> ; `
+  ht += htm;
   // show(document.getElementById("calender"));
-  return (document.getElementById("result").innerHTML = htm);
+  return (document.getElementById("result").innerHTML = ht);
 }
 
 function mal(idc) {
@@ -268,7 +269,6 @@ function mal(idc) {
           loc = "Kolkata";
         }
         htm += `
-        <p class="fs-1">Mall</p>
         <div class="card mb-3 mx-3" style="width: 100%;">
             <div class="card-body">
                 <h5 class="card-title">${loc}</h5>
@@ -312,7 +312,8 @@ function mal(idc) {
         </div>`;
       // });
     });
-  });
+  });ht = `<p class="fs-1">Corporate</p> ; `
+  ht += htm;
   // show(document.getElementById("calender"));
-  return (document.getElementById("result").innerHTML = htm);
+  return (document.getElementById("result").innerHTML = ht);
 }
